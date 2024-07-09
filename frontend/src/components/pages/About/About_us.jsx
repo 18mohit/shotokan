@@ -2,7 +2,7 @@ import React from 'react'
 
 function About_us() {
   return (
-    <div>About__us</div>
+    <div>About_us</div>
   )
 }
 
