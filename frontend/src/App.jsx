@@ -8,7 +8,7 @@ import Team from './components/pages/Team/Team';
 import Gallery from './components/pages/Gallery/Gallery';
 import Footer from './components/Navbar/Footer';
 import AddImage from './components/pages/Gallery/AddImage';
-import SignInSignUp from './components/pages/Home/SignInSignUp';
+import SigninSignup from './components/pages/Login/SignInSignUp';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -23,7 +23,7 @@ function App() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/team" element={<Team />} />
         <Route path="/addimage" element={<AddImage />} />
-        <Route path="/login" element={<SignInSignUp />} />
+        <Route path="/login/:role" element={<SigninSignup />} />
         
         {/* <Route path="/contact" element={<Contact />} /> */}
         {/* Add more routes as needed */}

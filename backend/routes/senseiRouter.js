@@ -5,13 +5,13 @@ const upload = require('../config/multer-config'); // Multer configuration
 
 router.post('/create', 
     upload.single("photo"), // Handle single file upload for 'photo'
-    upload.single("cercertificate"), // Handle single file upload for 'cercertificate'
+    upload.single("certificate"), // Handle single file upload for 'cercertificate'
     async (req, res) => { 
         try {
             let { fullname, email, password } = req.body;
             let createdSensei = await senseiModel.create({
                 photo: req.file.buffer, // Access 'photo' file buffer
-                cercertificate: req.file.buffer, // Access 'cercertificate' file buffer
+                certificate: req.file.buffer, // Access 'cercertificate' file buffer
                 fullname,
                 email,
                 password
