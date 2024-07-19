@@ -33,6 +33,9 @@ const gallerySlice = createSlice({
         state.error = action.error.message;
       });
   },
+
+  
+
 });
 
 export const { addImage } = gallerySlice.actions;

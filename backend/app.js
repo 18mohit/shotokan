@@ -21,7 +21,7 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => console.log('MongoDB connection error:', err));
 
 app.use('/api/images', imageRouter);
-app.use('/login',ownersRouter);
+app.use('/register',ownersRouter);
 // app.use('/sensei',senseiRouter);
 
 app.get('/', (req, res) => {

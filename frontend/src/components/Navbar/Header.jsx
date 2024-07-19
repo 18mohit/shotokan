@@ -3,8 +3,16 @@ import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo.jpeg";
 import { FaAngleDown } from "react-icons/fa6";
 import punch from "../../assets/punch.jpeg";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../store/authSlice";
 
 function Header() {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -67,9 +75,6 @@ function Header() {
                 to="/login"
                 className="text-white"
               >
-                <button className="h-[11vw] -mr-[1.3vw] bg-blue-600 font-bold px-[4vw] transition duration-300">
-                  Login
-                </button>
               </NavLink>
             </div>
             {isNavVisible && (
@@ -135,47 +140,55 @@ function Header() {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    onMouseEnter={toggleDropdown}
-                    onMouseLeave={closeDropdown}
-                    className={({ isActive }) =>
-                      isActive
-                        ? "hover:text-yellow-400"
-                        : "hover:text-yellow-400"
-                    }
-                  >
-                    <div className="flex">
-                      Login
-                      <div className="relative top-2 left-1">
-                        <FaAngleDown />
-                      </div>
-                      <ul
-                      className={`${
-                        isDropdownOpen ? "block" : "hidden"
-                      } absolute bg-gray-700 bg-opacity-100 mt-[7vw] sm:mt-[2vw] -ml-[1vw]  shadow-md border-black rounded-xl overflow-hidden z-20 flex flex-col`}
+                  {isAuthenticated ? (
+                    <button
+                      onClick={handleLogout}
+                      className=" p-2 "
                     >
-                      <NavLink
-                        to="/login/student"
-                        className="p-3 hover:bg-gray-600 hover:text-yellow-400 text-white"
-                      >
-                        Student
-                      </NavLink>
-                      <NavLink
-                        to="/login/sensei"
-                        className="p-3 hover:bg-gray-600 hover:text-yellow-400 text-white"
-                      >
-                        Sensei
-                      </NavLink>
-                      <NavLink
-                        to="/login/owner"
-                        className="p-3 hover:bg-gray-600 hover:text-yellow-400 text-white"
-                      >
-                        Owner
-                      </NavLink>
-                    </ul>
-                    </div>
-                    
-                  </NavLink>
+                      Logout
+                    </button>
+                  ) : (
+                    <NavLink
+                      onMouseEnter={toggleDropdown}
+                      onMouseLeave={closeDropdown}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "hover:text-yellow-400"
+                          : "hover:text-yellow-400"
+                      }
+                    >
+                      <div className="flex">
+                        Login
+                        <div className="relative top-2 left-1">
+                          <FaAngleDown />
+                        </div>
+                        <ul
+                          className={`${
+                            isDropdownOpen ? "block" : "hidden"
+                          } absolute bg-gray-700 bg-opacity-100 mt-[7vw] sm:mt-[2vw] -ml-[1vw]  shadow-md border-black rounded-xl overflow-hidden z-20 flex flex-col`}
+                        >
+                          <NavLink
+                            to="/login/student"
+                            className="p-3 hover:bg-gray-600 hover:text-yellow-400 text-white"
+                          >
+                            Student
+                          </NavLink>
+                          <NavLink
+                            to="/login/sensei"
+                            className="p-3 hover:bg-gray-600 hover:text-yellow-400 text-white"
+                          >
+                            Sensei
+                          </NavLink>
+                          <NavLink
+                            to="/login/owner"
+                            className="p-3 hover:bg-gray-600 hover:text-yellow-400 text-white"
+                          >
+                            Owner
+                          </NavLink>
+                        </ul>
+                      </div>
+                    </NavLink>
+                  )}
                 </li>
               </ul>
             )}
