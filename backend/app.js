@@ -5,6 +5,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const imageRouter = require('./routes/imageRouter');
 const path = require('path');
+const session = require('express-session');
 const ownersRouter = require('./routes/ownerRouter');
 const senseiRouter = require('./routes/senseiRouter');
 const authRouter = require('./routes/authRouter');
@@ -22,6 +23,11 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()); // Ensure this line is present
+app.use(session({
+  secret: 'shotokan',
+  resave: false,
+  saveUninitialized: true,
+}));
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))

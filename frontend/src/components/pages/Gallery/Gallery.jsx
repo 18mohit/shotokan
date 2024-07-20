@@ -6,7 +6,10 @@ import { fetchImages } from '../../../store/gallerySlice';
 function Gallery() {
   const dispatch = useDispatch();
   const images = useSelector((state) => state.gallery.images);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
+  // Retrieve role from local storage
+  const userRole = localStorage.getItem('userRole');
   useEffect(() => {
     dispatch(fetchImages());
   }, [dispatch]);
@@ -28,7 +31,8 @@ function Gallery() {
           <p className="text-white font-serif">No images available</p>
         )}
       </div>
-      <div className="flex justify-center mt-4">
+      {isAuthenticated && userRole === 'owner' && (
+        <div className="flex justify-center mt-4">
         <NavLink
           className="h-10 rounded-xl bg-gray-900 hover:bg-gray-950 border text-white font-bold px-8 py-2 transition duration-500"
           to="/addimage"
@@ -36,6 +40,8 @@ function Gallery() {
           Add Image
         </NavLink>
       </div>
+      )}
+      
     </>
   );
 }

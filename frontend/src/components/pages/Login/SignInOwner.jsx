@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from "../../../context/AuthContext";
-
+import { useDispatch } from 'react-redux';
 
 const SignInOwner = () => {
   const { role } = useParams();
   const navigate = useNavigate();
   const { login } = useAuth();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -25,9 +26,10 @@ const SignInOwner = () => {
     e.preventDefault();
     try {
       await login(formData);
+      localStorage.setItem('userRole',role); 
       navigate('/');
     } catch (err) {
-      console.error(err.message);
+      console.error(err);
     }
   };
 
