@@ -1,23 +1,17 @@
+// src/components/SignInOwner.jsx
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-// import { signIn } from '../../../api'; // Adjust the path if necessary
-// import { login } from '../../../store/authSlice';
+import { useAuth } from "../../../context/AuthContext";
+
 
 const SignInOwner = () => {
   const { role } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-
-  const toggleForm = () => {
-    navigate('/register/owner');
-  };
-
-  const roleText = role.charAt(0).toUpperCase() + role.slice(1);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -27,23 +21,21 @@ const SignInOwner = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Dispatch an action to handle sign-in with email and password
-    // dispatch(signIn(formData));
-    // Clear form fields after submission
-    setFormData({
-      email: '',
-      password: '',
-    });
-    navigate('/');
+    try {
+      await login(formData);
+      navigate('/');
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
         <h2 className="text-2xl font-bold text-center">
-          Sign In for <span className="text-yellow-400">{roleText}</span>
+          Sign In for <span className="text-yellow-400">{role.charAt(0).toUpperCase() + role.slice(1)}</span>
         </h2>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
@@ -82,7 +74,7 @@ const SignInOwner = () => {
         <p className="text-sm text-center text-gray-600">
           Don't have an account?{' '}
           <button
-            onClick={toggleForm}
+            onClick={() => navigate('/register/owner')}
             className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none"
           >
             Sign Up

@@ -18,12 +18,13 @@ const loginOwner = async (req, res) => {
 
         const token = generateToken(owner);
         res.cookie('token', token);
-        res.redirect('/');
+        return res.redirect('/');
     } catch (error) {
         console.error('Login error:', error);
-        res.status(500).json({ msg: 'Internal Server Error' });
+        return res.status(500).json({ msg: 'Internal Server Error' });
     }
 };
+
 
 const createOwner = async (req, res) => {
     try {
@@ -43,7 +44,6 @@ const createOwner = async (req, res) => {
             email,
             password
         });
-
         const token = generateToken(createdOwner);
         res.cookie('token', token);
         res.status(201).json({ msg: 'Owner Created' });
@@ -53,4 +53,9 @@ const createOwner = async (req, res) => {
     }
 };
 
-module.exports = { loginOwner, createOwner };
+const logoutOwner = async (req,res) => {
+    res.cookie('token', '');
+    res.redirect('/');
+}
+
+module.exports = { loginOwner, createOwner, logoutOwner };

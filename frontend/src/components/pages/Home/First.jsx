@@ -55,9 +55,7 @@ function First() {
           </div>
         </div>
         </div>
-          <NavLink to="/login" className="hidden sm:block h-[3.5vw] mr-[12vw] mt-[29.5vw] rounded-xl b2 bg-gray-900 hover:bg-gray-950 border text-white font-bold px-[3vw] py-[0.8vw] transition duration-500">
-            Login
-        </NavLink>
+
         <div className="left mr-[5vw]">
             <img 
             className=" h-[50vw] sm:h-[33.5vw]" 
