@@ -9,6 +9,6 @@ function Sensei() {
           <img className='pt-2' src={nature} alt="" />
         </div>
   )
-}
+};
 
 export default Sensei

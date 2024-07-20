@@ -74,7 +74,7 @@ const SignInOwner = () => {
         <p className="text-sm text-center text-gray-600">
           Don't have an account?{' '}
           <button
-            onClick={() => navigate('/register/owner')}
+            onClick={() => navigate(`/register/${role}`)}
             className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none"
           >
             Sign Up
