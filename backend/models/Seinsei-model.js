@@ -1,15 +1,29 @@
 const mongoose = require('mongoose');
 
-const senseiSchema = mongoose.Schema({
+const senseiSchema = new mongoose.Schema({
     fullname: {
-        type:String,
+        type: String,
         minLength: 3,
         trim: true
     },
-    email: String,
-    password: String,
-    photo: String,
-    cercertificate: String
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    photo: {
+        type: Buffer,
+        required: true
+    },
+    certificate: {
+        type: Buffer,
+        required: true
+    }
 });
 
-module.exports = mongoose.model('sensei', senseiSchema);
+module.exports = mongoose.model('Sensei', senseiSchema);
