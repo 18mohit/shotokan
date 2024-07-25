@@ -35,8 +35,8 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use('/api', authRouter);
 app.use('/api/images', imageRouter);
-app.use('/register', ownersRouter);
-app.use('/sensei', senseiRouter);
+// app.use('/register', ownersRouter);
+// app.use('/register', senseiRouter);
 // app.use('/student', studentRouter);
 
 app.get('/', (req, res) => {

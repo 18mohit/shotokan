@@ -2,29 +2,29 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const SignUp = () => {
+const SignUpSensei = () => {
   const { role } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullname: '',
     email: '',
     password: '',
-    photo: null,
-    certificate: null,
+    photo: '',
+    certificate: '',
   });
   const [error, setError] = useState(null);
 
   const toggleForm = () => {
-    navigate(`/login/${role}`);
+    navigate('/login/sensei');
   };
 
   const roleText = role.charAt(0).toUpperCase() + role.slice(1);
 
   const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
+    const { id, value } = e.target;
     setFormData({
       ...formData,
-      [name]: files ? files[0] : value,
+      [id]: value,
     });
   };
 
@@ -32,29 +32,16 @@ const SignUp = () => {
     e.preventDefault();
     setError(null); // Reset error state
 
-    const formDataObj = new FormData();
-    for (const key in formData) {
-      if (formData[key]) { // Only append if formData[key] is not null or undefined
-        formDataObj.append(key, formData[key]);
-      }
-    }
-
-    const url = role === 'sensei' ? 'http://localhost:4000/sensei/create' : 'http://localhost:4000/register/owner';
-
     try {
-      const result = await axios.post(url, formDataObj, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const result = await axios.post('http://localhost:4000/sensei/create', formData);
+      // console.log(result);
       navigate('/');
       // Navigate or show success message after successful registration
     } catch (err) {
       console.error(err);
       setError('Failed to register. Please try again.');
     }
-};
-
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -69,7 +56,7 @@ const SignUp = () => {
             </label>
             <input
               type="text"
-              name="fullname"
+              id="fullname"
               value={formData.fullname}
               onChange={handleInputChange}
               className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -82,7 +69,7 @@ const SignUp = () => {
             </label>
             <input
               type="email"
-              name="email"
+              id="email"
               value={formData.email}
               onChange={handleInputChange}
               className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -95,41 +82,39 @@ const SignUp = () => {
             </label>
             <input
               type="password"
-              name="password"
+              id="password"
               value={formData.password}
               onChange={handleInputChange}
               className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
           </div>
-          {role === 'sensei' && (
-            <>
-              <div>
-                <label className="block text-sm font-medium text-gray-700" htmlFor="photo">
-                  Photo
-                </label>
-                <input
-                  type="file"
-                  name="photo"
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700" htmlFor="certificate">
-                  Certificate
-                </label>
-                <input
-                  type="file"
-                  name="certificate"
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  required
-                />
-              </div>
-            </>
-          )}
+          <div>
+            <label className="block text-sm font-medium text-gray-700" htmlFor="photo">
+              Photo
+            </label>
+            <input
+              type="file"
+              id="photo"
+              value={formData.photo}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700" htmlFor="certificate">
+            certificate
+            </label>
+            <input
+              type="file"
+              id="certificate"
+              value={formData.certificate}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+            />
+          </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
           <button
             type="submit"
@@ -152,4 +137,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpSensei;

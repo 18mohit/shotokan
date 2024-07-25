@@ -10,6 +10,7 @@ import Footer from './components/Navbar/Footer';
 import AddImage from './components/pages/Gallery/AddImage';
 import Signup from './components/pages/Login/SignUp';
 import SignInOwner from './components/pages/Login/SignInOwner';
+import SignUpSensei from './components/pages/Login/SignUpSensei';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -26,6 +27,7 @@ function App() {
         <Route path="/addimage" element={<AddImage />} />
         <Route path="/register/:role" element={<Signup />} />
         <Route path="/login/:role" element={<SignInOwner />} />
+        <Route path="/create/sensei" element={<SignUpSensei />} />
         
       </Routes>
       <Footer/>

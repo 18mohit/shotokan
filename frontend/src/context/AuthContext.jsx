@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (formData) => {
     try {
-      const response = await axios.post('http://localhost:4000/register/owner/login', formData, { withCredentials: true });
+      const response = await axios.post(`http://localhost:4000/register/owner/login`, formData, { withCredentials: true });
       setIsAuthenticated(true);
       dispatch(loginAction());
       return response.data;
