@@ -4,44 +4,49 @@ const bcrypt = require("bcryptjs");
 
 const register = async (req, res) => {
     try {
-        const { fullname, email, password, role } = req.body;
-        if (!fullname || !email || !password || !role) {
-            return res.status(400).json({
-                message: "Something is missing",
-                success: false
-            });
-        }
-
-        const user = await UserModel.findOne({ email });
-        if (user) {
-            return res.status(400).json({
-                message: "User already exists with this email",
-                success: false
-            });
-        }
-
-        const hashpassword = await bcrypt.hash(password, 10);
-
-        await UserModel.create({
-            fullname,
-            email,
-            password: hashpassword,
-            role
+      const { fullname, email, password, role } = req.body;
+      const photo = req.files.photo[0];
+      const certificate = req.files.certificate[0];
+  
+      if (!fullname || !email || !password || !role || !photo || !certificate) {
+        return res.status(400).json({
+          message: "Something is missing",
+          success: false,
         });
-
-        return res.status(200).json({
-            message: "Account created successfully",
-            success: true
+      }
+  
+      const user = await UserModel.findOne({ email });
+      if (user) {
+        return res.status(400).json({
+          message: "User already exists with this email",
+          success: false,
         });
+      }
+  
+      const hashpassword = await bcrypt.hash(password, 10);
+  
+      await UserModel.create({
+        fullname,
+        email,
+        password: hashpassword,
+        role,
+        photo: photo.buffer, // Assuming you store the photo as a buffer
+        certificate: certificate.buffer, // Assuming you store the certificate as a buffer
+      });
+  
+      return res.status(200).json({
+        message: "Account created successfully",
+        success: true,
+      });
     } catch (error) {
-        console.error("Error in register function:", error); // Log the error details
-        return res.status(500).json({
-            message: "Something went wrong",
-            success: false
-        });
+      console.error("Error in register function:", error); // Log the error details
+      return res.status(500).json({
+        message: "Something went wrong",
+        success: false,
+      });
     }
-};
-
+  };
+  
 const login = async (req, res) => {
     try {
         const { email, password, role } = req.body;

@@ -21,12 +21,16 @@ const userSchema = new mongoose.Schema({
         enum:["Student", "Sensei", "Owner"],
         require:true
     },
+    photo: {
+        type: String
+    },
+    certificate: {
+        type: String
+    },
     profile:{
         bio: {type: String},
-        skills: {type: String},
-        photo: {type: String},
-        photoOriginalNmae:{type:String},
-        certificate: {type: String},
+        skills: {type: String},        
+        photoOriginalNmae:{type:String},    
         certificateOriginalNmae:{type:String},
         location: {type: String}
     },

@@ -9,7 +9,7 @@ import Gallery from './components/pages/Gallery/Gallery';
 import Footer from './components/Navbar/Footer';
 import AddImage from './components/pages/Gallery/AddImage';
 import Signup from './components/pages/Login/SignUp';
-import SignInOwner from './components/pages/Login/SignInOwner';
+import Login from './components/pages/Login/Login';
 import SignUpSensei from './components/pages/Login/SignUpSensei';
 
 function App() {
@@ -25,8 +25,8 @@ function App() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/team" element={<Team />} />
         <Route path="/addimage" element={<AddImage />} />
-        <Route path="/register/:role" element={<Signup />} />
-        <Route path="/login/:role" element={<SignInOwner />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/create/sensei" element={<SignUpSensei />} />
         
       </Routes>

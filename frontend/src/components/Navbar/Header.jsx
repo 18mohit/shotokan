@@ -4,33 +4,24 @@ import logo from "../../assets/logo.jpeg";
 import { FaAngleDown } from "react-icons/fa";
 import punch from "../../assets/punch.jpeg";
 import { useDispatch } from "react-redux";
-import { useAuth } from "../../context/AuthContext";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Avatar, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { LogOut, User2 } from "lucide-react";
 
 function Header() {
-  const { isAuthenticated, logout } = useAuth();
   const dispatch = useDispatch();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavVisible, setIsNavVisible] = useState(true);
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(prev => !prev);
-  };
-
-  const closeDropdown = () => {
-    setIsDropdownOpen(false);
-  };
-
   const toggleNavVisibility = () => {
-    setIsNavVisible(prev => !prev);
+    setIsNavVisible((prev) => !prev);
   };
+
+  const user = false;
 
   return (
     <header className="bg-gray-800 text-white">
@@ -79,7 +70,9 @@ function Header() {
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
-                    isActive ? "text-yellow-400 hover:text-yellow-400" : "hover:text-yellow-400"
+                    isActive
+                      ? "text-yellow-400 hover:text-yellow-400"
+                      : "hover:text-yellow-400"
                   }
                 >
                   Home
@@ -89,7 +82,9 @@ function Header() {
                 <NavLink
                   to="/about"
                   className={({ isActive }) =>
-                    isActive ? "text-yellow-400 hover:text-yellow-400" : "hover:text-yellow-400"
+                    isActive
+                      ? "text-yellow-400 hover:text-yellow-400"
+                      : "hover:text-yellow-400"
                   }
                 >
                   About Us
@@ -99,7 +94,9 @@ function Header() {
                 <NavLink
                   to="/gallery"
                   className={({ isActive }) =>
-                    isActive ? "text-yellow-400 hover:text-yellow-400" : "hover:text-yellow-400"
+                    isActive
+                      ? "text-yellow-400 hover:text-yellow-400"
+                      : "hover:text-yellow-400"
                   }
                 >
                   Photo Gallery
@@ -109,7 +106,9 @@ function Header() {
                 <NavLink
                   to="/team"
                   className={({ isActive }) =>
-                    isActive ? "text-yellow-400 hover:text-yellow-400" : "hover:text-yellow-400"
+                    isActive
+                      ? "text-yellow-400 hover:text-yellow-400"
+                      : "hover:text-yellow-400"
                   }
                 >
                   Our Team
@@ -119,64 +118,60 @@ function Header() {
                 <NavLink
                   to="/contact"
                   className={({ isActive }) =>
-                    isActive ? "text-yellow-400 hover:text-yellow-400" : "hover:text-yellow-400"
+                    isActive
+                      ? "text-yellow-400 hover:text-yellow-400"
+                      : "hover:text-yellow-400"
                   }
                 >
                   Contact
                 </NavLink>
               </li>
-              <li>
-                {isAuthenticated ? (
-                  <button
-                    onClick={handleLogout}
-                    className=""
-                  >
-                    Logout
-                  </button>
-                ) : (
-                  <div
-                    onMouseEnter={toggleDropdown}
-                    onMouseLeave={closeDropdown}
-                    className="relative"
-                  >
-                    <NavLink
-                      className={({ isActive }) =>
-                        isActive ? "hover:text-yellow-400" : "hover:text-yellow-400"
-                      }
-                    >
-                      <div className="flex">
-                        Login
-                        <div className="relative top-2 left-1">
-                          <FaAngleDown />
+             
+              <li className="items-center">
+                {
+                  !user ? (
+                    <div className="items-center sm:-mt-2 mt-0">
+                      <NavLink
+                      to="/login">
+                      <Button className=" w-[15vw] text-wrap sm:w-[6vw] bg-slate-50 text-black hover:bg-slate-200">Login</Button>
+                      </NavLink>
+                      <NavLink
+                      to="/signup">
+                      <Button className=" w-[15vw] text-wrap sm:w-[6vw] ">SignUp</Button>
+                      </NavLink>
+                    </div>
+                  ) : (
+                    <Popover>
+                    <PopoverTrigger asChild>
+                      <Avatar className="cursor-pointer" >
+                        <AvatarImage src="https://github.com/shadcn.png" />
+                      </Avatar>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-80">
+                      <div className="flex gap-10 ">
+                      <Avatar className="cursor-pointer" >
+                        <AvatarImage src="https://github.com/shadcn.png" />
+                      </Avatar>
+                        <div>
+                          <h1 className="font-medium">Patel Mohit</h1>
+                          <h1 className="font-medium text-gray-500">bio of mohit</h1>
                         </div>
                       </div>
-                    </NavLink>
-                    <ul
-                      className={`${
-                        isDropdownOpen ? "block" : "hidden"
-                      } absolute bg-gray-700 bg-opacity-100 -ml-[1vw] shadow-md border-black rounded-xl overflow-hidden z-20 flex flex-col`}
-                    >
-                      <NavLink
-                        to="/login/student"
-                        className="p-3 hover:bg-gray-600 hover:text-yellow-400 text-white"
-                      >
-                        Student
-                      </NavLink>
-                      <NavLink
-                        to="/login/sensei"
-                        className="p-3 hover:bg-gray-600 hover:text-yellow-400 text-white"
-                      >
-                        Sensei
-                      </NavLink>
-                      <NavLink
-                        to="/login/owner"
-                        className="p-3 hover:bg-gray-600 hover:text-yellow-400 text-white"
-                      >
-                        Owner
-                      </NavLink>
-                    </ul>
-                  </div>
-                )}
+                        <div className="flex flex-col ">
+                          <div className="flex items-center">
+                            <User2/>
+                          <Button variant="link" className="font-medium text-gray-500">view profile</Button>
+                          </div>
+                          <div className="flex items-center">
+                            <LogOut/>
+                          <Button variant="link" className="font-medium text-gray-500">logout</Button>
+                          </div>
+                        </div>
+                    </PopoverContent>
+                  </Popover>
+                  )
+                }
+                
               </li>
             </ul>
           )}
