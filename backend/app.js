@@ -6,9 +6,10 @@ const cookieParser = require('cookie-parser');
 const imageRouter = require('./routes/imageRouter');
 const path = require('path');
 const session = require('express-session');
-const ownersRouter = require('./routes/ownerRouter');
-const senseiRouter = require('./routes/senseiRouter');
 const authRouter = require('./routes/authRouter');
+const userRout = require('./routes/userRouts')
+const senseisStuRouter = require('./routes/senseisStuRouter')
+
 
 dotenv.config();
 
@@ -35,9 +36,10 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use('/api', authRouter);
 app.use('/api/images', imageRouter);
+app.use('/api/v1/user', userRout);
+app.use('/api/v1/senseistu', senseisStuRouter);
 // app.use('/register', ownersRouter);
-// app.use('/register', senseiRouter);
-// app.use('/student', studentRouter);
+
 
 app.get('/', (req, res) => {
   res.send('API is running...');
