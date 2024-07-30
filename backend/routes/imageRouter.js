@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const galleryModel = require('../models/gallery-model');
-const upload = require('../config/multer-config');
+// const upload = require('../config/multer-config');
+const uploadFields = require('../config/multer-config');
 
 // Route to get all images
 router.get('/', async (req, res) => {
@@ -14,7 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 // Route to upload an image
-router.post('/create', upload.single('photo'), async (req, res) => {
+router.post('/create', uploadFields, async (req, res) => {
   try {
     let { description } = req.body;
 

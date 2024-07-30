@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.jpeg";
-import { FaAngleDown } from "react-icons/fa";
 import punch from "../../assets/punch.jpeg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Popover,
   PopoverContent,
@@ -12,16 +11,36 @@ import {
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { LogOut, User2 } from "lucide-react";
+import { toast } from "sonner";
+import axios from "axios";
+import { USER_API_END_POINT } from "@/context/contex";
+import { setUser } from "@/store/authSlice";
 
 function Header() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((store) => store.auth);
   const [isNavVisible, setIsNavVisible] = useState(true);
 
   const toggleNavVisibility = () => {
     setIsNavVisible((prev) => !prev);
   };
 
-  const user = false;
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        dispatch(setUser(null));
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log("logout error", error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   return (
     <header className="bg-gray-800 text-white">
@@ -126,52 +145,65 @@ function Header() {
                   Contact
                 </NavLink>
               </li>
-             
               <li className="items-center">
-                {
-                  !user ? (
-                    <div className="items-center sm:-mt-2 mt-0">
-                      <NavLink
-                      to="/login">
-                      <Button className=" w-[15vw] text-wrap sm:w-[6vw] bg-slate-50 text-black hover:bg-slate-200">Login</Button>
-                      </NavLink>
-                      <NavLink
-                      to="/signup">
-                      <Button className=" w-[15vw] text-wrap sm:w-[6vw] ">SignUp</Button>
-                      </NavLink>
-                    </div>
-                  ) : (
-                    <Popover>
+                {!user ? (
+                  <div className="items-center sm:-mt-2 mt-0">
+                    <NavLink to="/login">
+                      <Button className="w-[15vw] text-wrap sm:w-[6vw] bg-slate-50 text-black hover:bg-slate-200">
+                        Login
+                      </Button>
+                    </NavLink>
+                    <NavLink to="/signup">
+                      <Button className="w-[15vw] text-wrap sm:w-[6vw]">
+                        SignUp
+                      </Button>
+                    </NavLink>
+                  </div>
+                ) : (
+                  <Popover>
                     <PopoverTrigger asChild>
-                      <Avatar className="cursor-pointer" >
-                        <AvatarImage src="https://github.com/shadcn.png" />
+                      <Avatar className="cursor-pointer">
+                        <AvatarImage src={user.photo} />
                       </Avatar>
                     </PopoverTrigger>
                     <PopoverContent className="w-80">
                       <div className="flex gap-10 ">
-                      <Avatar className="cursor-pointer" >
-                        <AvatarImage src="https://github.com/shadcn.png" />
-                      </Avatar>
+                        <Avatar className="cursor-pointer">
+                          <AvatarImage src={user.photo} />
+                        </Avatar>
                         <div>
-                          <h1 className="font-medium">Patel Mohit</h1>
-                          <h1 className="font-medium text-gray-500">bio of mohit</h1>
+                          <h1 className="font-medium">{user.fullname}</h1>
+                          <h1 className="font-medium text-gray-500">
+                            {user.role}
+                          </h1>
                         </div>
                       </div>
-                        <div className="flex flex-col ">
-                          <div className="flex items-center">
-                            <User2/>
-                          <Button variant="link" className="font-medium text-gray-500">view profile</Button>
-                          </div>
-                          <div className="flex items-center">
-                            <LogOut/>
-                          <Button variant="link" className="font-medium text-gray-500">logout</Button>
-                          </div>
+                      <div className="flex flex-col ">
+                        <div className="flex items-center">
+                          <User2 />
+                          <NavLink to="/profile">
+                            <Button
+                              variant="link"
+                              className="font-medium text-gray-500"
+                            >
+                              View Profile
+                            </Button>
+                          </NavLink>
                         </div>
+                        <div className="flex items-center">
+                          <LogOut />
+                          <Button
+                            onClick={logoutHandler}
+                            variant="link"
+                            className="font-medium text-gray-500"
+                          >
+                            Logout
+                          </Button>
+                        </div>
+                      </div>
                     </PopoverContent>
                   </Popover>
-                  )
-                }
-                
+                )}
               </li>
             </ul>
           )}

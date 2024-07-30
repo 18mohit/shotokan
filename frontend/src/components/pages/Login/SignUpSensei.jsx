@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignUpSensei = () => {
   const { role } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    fullname: '',
-    email: '',
-    password: '',
-    photo: '',
-    certificate: '',
+    fullname: "",
+    email: "",
+    password: "",
+    photo: "",
+    certificate: "",
   });
   const [error, setError] = useState(null);
 
   const toggleForm = () => {
-    navigate('/login/sensei');
+    navigate("/login/sensei");
   };
 
   const roleText = role.charAt(0).toUpperCase() + role.slice(1);
@@ -33,13 +33,14 @@ const SignUpSensei = () => {
     setError(null); // Reset error state
 
     try {
-      const result = await axios.post('http://localhost:4000/sensei/create', formData);
-      // console.log(result);
-      navigate('/');
-      // Navigate or show success message after successful registration
+      const result = await axios.post(
+        "http://localhost:4000/sensei/create",
+        formData
+      );
+      navigate("/");
     } catch (err) {
       console.error(err);
-      setError('Failed to register. Please try again.');
+      setError("Failed to register. Please try again.");
     }
   };
 
@@ -51,7 +52,10 @@ const SignUpSensei = () => {
         </h2>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-sm font-medium text-gray-700" htmlFor="fullname">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="fullname"
+            >
               Name
             </label>
             <input
@@ -64,7 +68,10 @@ const SignUpSensei = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700" htmlFor="email">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="email"
+            >
               Email
             </label>
             <input
@@ -77,7 +84,10 @@ const SignUpSensei = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700" htmlFor="password">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
@@ -90,7 +100,10 @@ const SignUpSensei = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700" htmlFor="photo">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="photo"
+            >
               Photo
             </label>
             <input
@@ -103,8 +116,11 @@ const SignUpSensei = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700" htmlFor="certificate">
-            certificate
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="certificate"
+            >
+              certificate
             </label>
             <input
               type="file"
@@ -124,7 +140,7 @@ const SignUpSensei = () => {
           </button>
         </form>
         <p className="text-sm text-center text-gray-600">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <button
             onClick={toggleForm}
             className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none"

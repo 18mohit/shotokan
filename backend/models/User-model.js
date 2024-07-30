@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         enum:["Student", "Sensei", "Owner"],
-        require:true
+        required: true
     },
     photo: {
         type: String
@@ -27,18 +27,19 @@ const userSchema = new mongoose.Schema({
     certificate: {
         type: String
     },
-    profile:{
+    profile: {
         bio: {type: String},
         skills: {type: String},        
-        photoOriginalNmae:{type:String},    
-        certificateOriginalNmae:{type:String},
+        // Position: {type: Position}, 
+        photoOriginalName: {type: String},    
+        certificateOriginalName: {type: String},
         location: {type: String}
     },
     Students: [{
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'SenseiStu',
-        require: true,
-        }], 
+        required: true
+    }],
 }, {timestamps: true});
 
 module.exports = mongoose.model('User', userSchema);

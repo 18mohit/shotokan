@@ -12,4 +12,9 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-module.exports = upload;
+const uploadFields = upload.fields([
+    { name: 'certificate', maxCount: 1 },
+    { name: 'photo', maxCount: 1 }
+]);
+
+module.exports = uploadFields;

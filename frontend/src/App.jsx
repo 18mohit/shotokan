@@ -11,6 +11,7 @@ import AddImage from './components/pages/Gallery/AddImage';
 import Signup from './components/pages/Login/SignUp';
 import Login from './components/pages/Login/Login';
 import SignUpSensei from './components/pages/Login/SignUpSensei';
+import Profile from './components/Navbar/Profile';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -28,6 +29,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create/sensei" element={<SignUpSensei />} />
+        <Route path="/profile" element={<Profile />} />
         
       </Routes>
       <Footer/>
