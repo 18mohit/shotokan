@@ -1,32 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import Sensei from './Sensei';
-
+import axios from 'axios';
 
 function Team() {
-  const teamArr = [1,2,3,4,5,6,7,8,9,10];
-  return (
-    <>
-      <div className=''>
-      {
-        teamArr.length < 1 ? <span> member is not availeble </span> :(
-          <div className='flex justify-center p-5 '>
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 ">
-            {teamArr.map((item, index) => {
-          return (
-            <div key={index} className=' 
-            '>
-              <Sensei />
-              </div>
-              )
-        })
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/api/v1/user/users", { withCredentials: true });
+        setUsers(response.data.users);
+      } catch (error) {
+        console.error("Error fetching users:", error);
       }
+    };
+
+    fetchUsers();
+  }, []);
+
+  return (
+    <div>
+      {
+        users.length < 1 ? (
+          <span>Member is not available</span>
+        ) : (
+          <div className='flex justify-center p-5'>
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
+              {users.map((user, index) => (
+                <div key={index}>
+                  <Sensei user={user} />
+                </div>
+              ))}
             </div>
           </div>
         )
       }
-      </div>
-    </>
-  )
+    </div>
+  );
 }
 
-export default Team
+export default Team;

@@ -3,15 +3,17 @@ import { Pen } from "lucide-react";
 import BlackBeltStu from "./BlackBeltStu";
 import UpdateProfile from "./UpdateProfile";
 import { useSelector } from "react-redux";
+import AddBlackStu from "./AddBlackStu";
 
 function Profile() {
   const [open, setOpen] = useState(false);
+  const [addStuopen, setAddStuOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);
 
   return (
     <>
       <div className="bg-slate-600">
-        <div className=" bg-slate-900 max-w-7xl mx-auto border border-gray-400 rounded-2xl my-5 p-8">
+        <div className="bg-slate-900 max-w-7xl mx-auto border border-gray-400 rounded-2xl my-5 p-8">
           <div className="flex justify-between">
             <div className="flex gap-4">
               <div className="w-[25vw] h-[30vw] cursor-pointer">
@@ -33,7 +35,7 @@ function Profile() {
                     <h1 className="font-medium text-xl">
                       Your Black Belt Students
                     </h1>
-                    <span className="text-gray-600">20</span>{" "}
+                    <span className="text-gray-600">20</span>
                     {/* Replace with dynamic data if available */}
                   </div>
                 </div>
@@ -64,6 +66,14 @@ function Profile() {
                       ) : (
                         <span>No certificate available</span>
                       )}
+                      <div>
+                        <button
+                          onClick={() => setAddStuOpen(true)}
+                          className="mt-[6vw]"
+                        >
+                          Add Student
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -77,6 +87,7 @@ function Profile() {
         <div className="bg-slate-900">
           <BlackBeltStu />
           <UpdateProfile open={open} setOpen={setOpen} />
+          <AddBlackStu addStuopen={addStuopen} setAddStuOpen={setAddStuOpen} />
         </div>
       </div>
     </>

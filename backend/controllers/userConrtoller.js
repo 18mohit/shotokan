@@ -93,7 +93,6 @@ const login = async (req, res) => {
       });
     }
 
-    // Check role
     if (user.role !== role) {
       return res.status(400).json({
         message: "Incorrect role",
@@ -101,7 +100,7 @@ const login = async (req, res) => {
       });
     }
 
-    const tokenData = { userId: user._id };
+    const tokenData = { _id: user._id }; // Ensure the payload includes the user ID
     const token = jwt.sign(tokenData, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
@@ -111,8 +110,8 @@ const login = async (req, res) => {
       fullname: user.fullname,
       email: user.email,
       role: user.role,
-      photo: user.photo, // Include photo
-      certificate: user.certificate, // Include certificate
+      photo: user.photo,
+      certificate: user.certificate,
     };
 
     return res
@@ -211,4 +210,21 @@ const updateProfile = async (req, res) => {
   }
 };
 
-module.exports = { register, login, logout, updateProfile };
+const getAllSensei = async (req, res) => {
+  try {
+    const users = await UserModel.find({ role:"Sensei" });
+    return res.status(200).json({
+      message: "Users retrieved successfully",
+      users,
+      success: true,
+    });
+  } catch (error) {
+    console.error("Error in getAllUsers function:", error); // Log the error details
+    return res.status(500).json({
+      message: "Something went wrong",
+      success: false,
+    });
+  }
+};
+
+module.exports = { register, login, logout, updateProfile, getAllSensei };

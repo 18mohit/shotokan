@@ -22,7 +22,7 @@ function UpdateProfile({ open, setOpen }) {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.auth);
-
+  
   const [input, setInput] = useState({
     fullname: user?.fullname || "",
     bio: user?.profile?.bio || "",

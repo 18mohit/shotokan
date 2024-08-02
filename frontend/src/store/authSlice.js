@@ -17,6 +17,6 @@ const authSlice = createSlice({
     },
   },
 });
-
+  
 export const { setUser, setLoading } = authSlice.actions; 
 export default authSlice.reducer;

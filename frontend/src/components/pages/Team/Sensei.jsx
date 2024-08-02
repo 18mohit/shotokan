@@ -1,22 +1,23 @@
 import React from 'react'
 import nature from '../../../assets/nature.jpeg';
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
+// import useGetallBlackStu from '@/components/hooks/useGetAllBlackStu';
 
-function Sensei() {
+function Sensei({ user }) {
+  // useGetallBlackStu();
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   return (
      <div className=' w-[40vw] h-[70vw] sm:h-[23vw] sm:w-[18vw] shadow-xl hover:shadow-slate-500 border border-gray-200 pt-[0vw] pl-[1vw] pr-[1vw] pb-[2vw] rounded '>
-          <img className='pt-2 h-[43vw] sm:h-[15vw] w-full align-middle ' src={nature} alt="" />
+          <img className='pt-2 h-[43vw] sm:h-[15vw] w-full align-middle ' src={user?.photo} alt="" />
               <div className='grid '>
-                    <h1 className='text-[5vw] sm:text-[1.3vw] font-serif text-black ' > Jhon Deo</h1>
-                    <span className='text-slate-500 text-[3vw] sm:text-[1vw] font-semibold' >Chif officer</span>  
-                    <p className='text-slate-500 text-[3vw] sm:text-[1vw] font-semibold' >More info</p>  
+                    <h1 className='text-[5vw] sm:text-[1.3vw] font-serif text-black ' >{ user?.fullname }</h1>
+                    <span className='text-slate-500 text-[3vw] sm:text-[1vw] font-semibold' >{user.role}</span>  
                     <Button className='shadow-md hover:shadow-slate-500' onPress={onOpen}>More info</Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => ( 
             <>
-              <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">{user.fullname}</ModalHeader>
               <ModalBody>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -35,6 +36,18 @@ function Sensei() {
                   Et mollit incididunt nisi consectetur esse laborum eiusmod pariatur 
                   proident Lorem eiusmod et. Culpa deserunt nostrud ad veniam.
                 </p>
+                <p>{user?.certificate ? (
+                        <a
+                          className="text-blue-900"
+                          target="_blank"
+                          href={user.certificate}
+                          rel="noopener noreferrer"
+                        >
+                          {user.fullname}'s Certificate
+                        </a>
+                      ) : (
+                        <span>No certificate available</span>
+                      )}</p>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>

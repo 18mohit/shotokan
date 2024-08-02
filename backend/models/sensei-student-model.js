@@ -6,8 +6,8 @@ const senseiStudentSchema = new mongoose.Schema({
         minLength: 3,
         trim: true
     },
-    photo: {
-        type: String,
+    date: {
+        type: Date,
         require: true,
     },
     certificate: {
