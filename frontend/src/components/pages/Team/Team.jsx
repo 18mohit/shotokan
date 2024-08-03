@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sensei from './Sensei';
 import axios from 'axios';
+import AllBlackBeltStu from './AllBlackBeltStu';
 
 function Team() {
   const [users, setUsers] = useState([]);
@@ -19,7 +20,9 @@ function Team() {
   }, []);
 
   return (
+    <>
     <div>
+
       {
         users.length < 1 ? (
           <span>Member is not available</span>
@@ -35,7 +38,9 @@ function Team() {
           </div>
         )
       }
-    </div>
+      <AllBlackBeltStu/>
+      </div>
+    </>
   );
 }
 

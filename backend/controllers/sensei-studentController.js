@@ -118,5 +118,21 @@ const updateStudent = async (req, res) => {
     }
 }
 
+const getAllStu = async (req, res) => {
+  try {
+    const students = await SenseiStuModel.find();
+    return res.status(200).json({
+      message: "students retrieved successfully",
+      students,
+      success: true,
+    });
+  } catch (error) {
+    console.error("Error in getAllStu function:", error); // Log the error details
+    return res.status(500).json({
+      message: "Something went wrong",
+      success: false,
+    });
+  }
+};
 
-module.exports = { registerStu, getStudent, getStudentById, updateStudent };
+module.exports = { registerStu, getStudent, getStudentById, updateStudent, getAllStu };

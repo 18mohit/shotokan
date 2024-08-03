@@ -58,7 +58,6 @@ function AddBlackStu({ addStuopen, setAddStuOpen }) {
           withCredentials: true,
         }
       );
-      console.log("response", response);
       if (response.data?.success) {
         toast.success("Student added successfully!");
         setAddStuOpen(false);
