@@ -8,14 +8,15 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "../ui/input";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "sonner";
 
 function AddBlackStu({ addStuopen, setAddStuOpen }) {
   const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.auth.user); // Corrected to access auth slice
   const [formData, setFormData] = useState({
-    fullname: "",
+    studentname: "",
     date: "",
     certificate: null,
   });
@@ -32,12 +33,19 @@ function AddBlackStu({ addStuopen, setAddStuOpen }) {
     e.preventDefault();
     setLoading(true);
 
+    if (!user || !user._id) {
+      toast.error("User is not authenticated.");
+      setLoading(false);
+      return;
+    }
+
     const data = new FormData();
     data.append("studentname", formData.studentname);
     data.append("date", formData.date);
     if (formData.certificate) {
       data.append("certificate", formData.certificate);
     }
+    data.append("userId", user._id); // add the user ID to the form data
 
     try {
       const response = await axios.post(
@@ -45,7 +53,7 @@ function AddBlackStu({ addStuopen, setAddStuOpen }) {
         data,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
         }

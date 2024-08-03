@@ -1,69 +1,58 @@
 const SenseiStuModel = require("../models/sensei-student-model");
+const UserModel = require("../models/User-model");
 const bcrypt = require("bcryptjs");
 const { cloudinary } = require("../config/cloudinary.JS");
 
-
-
 const registerStu = async (req, res) => {
     try {
-        const { studentname, date } = req.body;
-        const certificate = req.files.certificate ? req.files.certificate[0] : null;
-
-        if (!studentname || !date || !certificate) {
-            return res.status(400).json({
-                message: "Something is missing",
-                success: false
-            });
-        }
-
-        // Upload certificate to Cloudinary
-        const certificateUpload = await new Promise((resolve, reject) => {
-            const uploadStream = cloudinary.uploader.upload_stream({ resource_type: 'auto' }, (error, result) => {
-                if (error) {
-                    return reject(error);
-                }
-                resolve(result);
-            });
-            uploadStream.end(certificate.buffer);
+      const { studentname, date, userId } = req.body;
+      const certificate = req.files.certificate ? req.files.certificate[0] : null;
+  
+      if (!studentname || !date || !certificate) {
+        return res.status(400).json({
+          message: "Something is missing",
+          success: false
         });
-
-        let student = await SenseiStuModel.findOne({ studentname: studentname });
-
-        if (student) {
-            return res.status(400).json({
-                message: "Student already exists",
-                success: false
-            });
-        }
-
-        const userId = req.user && req.user._id;
-        if (!userId) {
-            return res.status(400).json({
-                message: "User ID not found in request",
-                success: false,
-            });
-        }
-
-        student = await SenseiStuModel.create({
-            studentname: studentname,
-            date: date,
-            certificate: certificateUpload.secure_url,
-            Added_by: userId,
+      }
+  
+      // Upload certificate to Cloudinary
+      const certificateUpload = await new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream({ resource_type: 'auto' }, (error, result) => {
+          if (error) {
+            return reject(error);
+          }
+          resolve(result);
         });
-
-        return res.status(200).json({
-            message: "Student added successfully",
-            student,
-            success: true,
-        });
+        uploadStream.end(certificate.buffer);
+      });
+  
+      const student = await SenseiStuModel.create({
+        studentname,
+        date,
+        certificate: certificateUpload.secure_url,
+        Added_by: userId,
+      });
+  
+      // Update the user's Students array
+      await UserModel.findByIdAndUpdate(
+        userId,
+        { $push: { Students: student._id } },
+        { new: true, useFindAndModify: false }
+      );
+  
+      return res.status(200).json({
+        message: "Student added successfully",
+        student,
+        success: true,
+      });
     } catch (error) {
-        console.error('Error registering student:', error);
-        return res.status(500).json({
-            message: "Internal Server Error",
-            success: false,
-        });
+      console.error('Error registering student:', error);
+      return res.status(500).json({
+        message: "Internal Server Error",
+        success: false,
+      });
     }
-};
+  };
 
 const getStudent = async (req, res) => {
     try {

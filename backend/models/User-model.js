@@ -38,7 +38,6 @@ const userSchema = new mongoose.Schema({
     Students: [{
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'SenseiStu',
-        required: true
     }],
 }, {timestamps: true});
 

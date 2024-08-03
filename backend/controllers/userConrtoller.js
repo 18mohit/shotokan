@@ -41,9 +41,10 @@ const register = async (req, res) => {
         email,
         password: hashpassword,
         role,
-        photo: cloudPhotoResponse.secure_url, // cloudinary uri
+        photo: cloudPhotoResponse.secure_url,
         certificate: cloudCertificateResponse.secure_url,
         profile,
+        Students: [] // Initialize as an empty array
       });
 
       return res.status(200).json({
@@ -59,7 +60,7 @@ const register = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error("Error in register function:", error); // Log the error details
+    console.error("Error in register function:", error);
     return res.status(500).json({
       message: "Something went wrong",
       success: false,
