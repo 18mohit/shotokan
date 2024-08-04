@@ -7,12 +7,12 @@ function Sensei({ user }) {
   // useGetallBlackStu();
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   return (
-     <div className=' w-[40vw] h-[70vw] sm:h-[23vw] sm:w-[18vw] shadow-xl hover:shadow-slate-500 border border-gray-200 pt-[0vw] pl-[1vw] pr-[1vw] pb-[2vw] rounded '>
-          <img className='pt-2 h-[43vw] sm:h-[15vw] w-full align-middle ' src={user?.photo} alt="" />
+     <div className=' w-[40vw] h-[70vw] lg:h-[23vw] lg:w-[18vw] shadow-xl hover:shadow-slate-500 border border-gray-200 pt-[0vw] pl-[1vw] pr-[1vw] pb-[2vw] rounded '>
+          <img className='pt-2 h-[43vw] lg:h-[15vw] w-full align-middle ' src={user?.photo} alt="" />
               <div className='grid '>
-                    <h1 className='text-[5vw] sm:text-[1.3vw] font-serif text-black ' >{ user?.fullname }</h1>
-                    <span className='text-slate-500 text-[3vw] sm:text-[1vw] font-semibold' >{user.role}</span>  
-                    <Button className='shadow-md hover:shadow-slate-500' onPress={onOpen}>More info</Button>
+                    <h1 className='text-[5vw] lg:text-[1.3vw] font-serif text-black ' >{ user?.fullname }</h1>
+                    <span className='text-slate-500 text-[3vw] lg:text-[1vw] font-semibold' >{user.role}</span>  
+                    <Button className='shadow-md hover:shadow-slate-500 text-[3vw] lg:text-[1.2vw] ' onPress={onOpen}>More info</Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => ( 

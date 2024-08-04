@@ -27,8 +27,8 @@ function Team() {
         users.length < 1 ? (
           <span>Member is not available</span>
         ) : (
-          <div className='flex justify-center p-5'>
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
+          <div className='flex justify-center bg-slate-200 p-5'>
+            <div className="grid grid-cols-2 bg-slate-200 lg:grid-cols-5 gap-4">
               {users.map((user, index) => (
                 <div key={index}>
                   <Sensei user={user} />

@@ -44,8 +44,8 @@ function Header() {
 
   return (
     <header className="bg-gray-800 text-white">
-      <div className="flex flex-col sm:flex-row items-center justify-between px-[1.5vw] py-4">
-        <div className="sm:hidden flex items-center mb-4 sm:mb-0">
+      <div className="flex flex-col lg:flex-row items-center justify-between px-[1.5vw] py-4">
+        <div className="lg:hidden flex items-center mb-4 lg:mb-0">
           <NavLink to="/" className="text-white">
             <img
               src={logo}
@@ -54,28 +54,28 @@ function Header() {
             />
           </NavLink>
         </div>
-        <div className="hidden sm:flex items-center">
+        <div className="hidden lg:flex items-center">
           <NavLink to="/" className="text-white">
             <img
               src={logo}
               alt="Martial Arts Logo"
-              className="h-16 sm:h-[8vw] sm:w-[8.8vw] rounded-full inline"
+              className="h-16 lg:h-[8vw] lg:w-[8.8vw] rounded-full inline"
             />
           </NavLink>
         </div>
         <div className="text-center w-full">
-          <h1 className="sm:text-[2vw] text-[5vw] font-bold">
+          <h1 className="lg:text-[2vw] text-[5vw] font-bold">
             NIHON SHOTOKAN KARATE ASSOCIATION - INDIA
           </h1>
-          <h2 className="sm:text-[1vw] text-[2.5vw] font-mono">
+          <h2 className="lg:text-[1vw] text-[2.5vw] font-mono">
             Affiliated With: NIHON SHOTOKAN KARATE DO SHUUGOUKAI - JAPAN
           </h2>
         </div>
       </div>
 
       <div className="container mx-auto flex justify-between items-center px-[1.5vw]">
-        <nav className="sm:flex flex-wrap sm:ml-auto w-full sm:w-auto">
-          <div className="sm:hidden flex justify-between">
+        <nav className="lg:flex flex-wrap lg:ml-auto w-full lg:w-auto">
+          <div className="lg:hidden flex justify-between">
             <img
               src={punch}
               alt="Toggle navigation"
@@ -84,7 +84,7 @@ function Header() {
             />
           </div>
           {isNavVisible && (
-            <ul className="flex flex-col sm:flex-row sm:flex-wrap text-[5vw] sm:text-[1.4vw] ml-[1vw] sm:space-x-8">
+            <ul className="flex flex-col lg:flex-row lg:flex-wrap text-[5vw] lg:text-[1.4vw] ml-[1vw] lg:space-x-8">
               <li>
                 <NavLink
                   to="/"
@@ -147,14 +147,14 @@ function Header() {
               </li>
               <li className="items-center">
                 {!user ? (
-                  <div className="items-center sm:-mt-2 mt-0">
+                  <div className="items-center lg:-mt-2 mt-0">
                     <NavLink to="/login">
-                      <Button className="w-[15vw] text-wrap sm:w-[6vw] bg-slate-50 text-black hover:bg-slate-200">
+                      <Button className="w-[15vw] text-wrap lg:w-[6vw] bg-slate-50 text-black hover:bg-slate-200">
                         Login
                       </Button>
                     </NavLink>
                     <NavLink to="/signup">
-                      <Button className="w-[15vw] text-wrap sm:w-[6vw]">
+                      <Button className="w-[15vw] text-wrap lg:w-[6vw]">
                         SignUp
                       </Button>
                     </NavLink>

@@ -62,7 +62,7 @@ function AddImage() {
               placeholder="description"
               value={imageData.description}
               onChange={handleChange}
-              className="mt-1 p-2 block w-[20vw] border outline-none border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 p-2 block w-[20vw] border outline-none border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 lg:text-sm"
               required
             />
           </div>

@@ -63,7 +63,7 @@ const SignUpSensei = () => {
               id="fullname"
               value={formData.fullname}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 lg:text-sm"
               required
             />
           </div>
@@ -79,7 +79,7 @@ const SignUpSensei = () => {
               id="email"
               value={formData.email}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 lg:text-sm"
               required
             />
           </div>
@@ -95,7 +95,7 @@ const SignUpSensei = () => {
               id="password"
               value={formData.password}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 lg:text-sm"
               required
             />
           </div>
@@ -111,7 +111,7 @@ const SignUpSensei = () => {
               id="photo"
               value={formData.photo}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 lg:text-sm"
               required
             />
           </div>
@@ -127,7 +127,7 @@ const SignUpSensei = () => {
               id="certificate"
               value={formData.certificate}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="w-full px-3 py-2 mt-1 border rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 lg:text-sm"
               required
             />
           </div>

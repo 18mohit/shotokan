@@ -23,7 +23,7 @@ function Gallery() {
               <img 
               src={`data:image/jpeg;base64,${image.image}`} 
               alt={image.description} 
-              className="sm:w-[20vw] sm:h-[18vw] w-[35vw] h-[30vw] " />
+              className="lg:w-[20vw] lg:h-[18vw] w-[35vw] h-[30vw] " />
               <p className="text-white font-serif">{image.description}</p>
             </div>
           ))
