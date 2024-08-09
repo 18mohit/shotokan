@@ -1,80 +1,101 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { addImage } from '../../../store/gallerySlice';
-import axios from 'axios';
+import React, { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Label } from "@radix-ui/react-label";
+import { Input } from "../../ui/input";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { toast } from "sonner";
 
-function AddImage() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [imageData, setImagesData] = useState({
-    photo: null,
-    description: ''
-  });
+function AddImage({ openAddImage, setOpenAddImage, addNewImage }) {
+  const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.auth.user); 
+  const [image, setImage] = useState(null);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setImagesData({ ...imageData, [name]: value });
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setImagesData({ ...imageData, photo: file });
+    const { files } = e.target;
+    setImage(files[0]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('photo', imageData.photo);
-    formData.append('description', imageData.description);
+    setLoading(true);
+
+    if (!user || !user._id) {
+      toast.error("User is not authenticated.");
+      setLoading(false);
+      return;
+    }
+
+    const data = new FormData();
+    if (image) {
+      data.append("image", image);
+    }
+    data.append("userId", user._id);
 
     try {
-      const response = await axios.post('http://localhost:4000/api/images/create', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const response = await axios.post(
+        `http://localhost:4000/api/images/gallery`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
         }
-      });
-      console.log(response.data);
-      dispatch(addImage(response.data));
-      navigate('/gallery');
+      );
+      if (response.data?.success) {
+        toast.success("Image uploaded successfully!");
+        addNewImage(response.data.data); // Add new image to gallery
+        setOpenAddImage(false);
+      }
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.log("Error details:", error.response?.data || error.message);
+      toast.error("Failed to upload image.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className="font-serif bg-fuchsia-400 p-4">
-          <input
-            className="cursor-pointer mb-2"
-            name="photo"
-            id="photo"
-            type="file"
-            onChange={handleFileChange}
-            required
-          />
-          <div className="flex mb-2">
-            <input
-              type="text"
-              name="description"
-              id="description"
-              placeholder="description"
-              value={imageData.description}
-              onChange={handleChange}
-              className="mt-1 p-2 block w-[20vw] border outline-none border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 lg:text-sm"
-              required
-            />
+    <Dialog open={openAddImage} onOpenChange={setOpenAddImage}>
+      <DialogContent className="bg-slate-600">
+        <DialogHeader>
+          <DialogTitle>Upload Image</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSubmit}>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="image">Image</Label>
+              <Input
+                id="image"
+                name="image"
+                type="file"
+                accept="image/*"
+                onChange={handleChange}
+                className="col-span-3 border border-gray-400"
+              />
+            </div>
           </div>
-          <button
-            type="submit"
-            className="w-[20vw] bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-          >
-            Add Image
-          </button>
-        </div>
-      </form>
-    </div>
+          <DialogFooter>
+            <button
+              type="submit"
+              className={`w-full px-4 py-2 text-white bg-indigo-600 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
+                loading ? "opacity-50" : ""
+              }`}
+              disabled={loading}
+            >
+              {loading ? "Uploading..." : "Upload"}
+            </button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }
 

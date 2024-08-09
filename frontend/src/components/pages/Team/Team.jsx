@@ -22,7 +22,6 @@ function Team() {
   return (
     <>
     <div>
-
       {
         users.length < 1 ? (
           <span>Member is not available</span>
